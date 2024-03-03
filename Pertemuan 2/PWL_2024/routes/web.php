@@ -39,9 +39,9 @@ use Illuminate\Support\Facades\Route; //istilah Laravel untuk menyebut class ban
 //     return '2141762044 - Ereen Lourenza Natalia Mamahi';
 // });
 
-// // Route::get('/user/{name}', function($name){
-// //     return 'Nama saya '.$name;
-// // });
+// Route::get('/user/{name}', function($name){
+//     return 'Nama saya '.$name;
+// });
 
 // Route::get('/posts/{post}/comments/{comment}', 
 //             function($postId, $commentId){
@@ -52,9 +52,9 @@ use Illuminate\Support\Facades\Route; //istilah Laravel untuk menyebut class ban
 //     return 'Halaman Artikel dengan ID '.$id;
 // });
 
-// // Route::get('/user/{name?}', function($name=null){
-// //     return 'Nama saya '.$name;
-// // });
+// Route::get('/user/{name?}', function($name=null){
+//     return 'Nama saya '.$name;
+// });
 
 // Route::get('/user/{name?}', function($name='John'){
 //     return 'Nama saya '.$name;
@@ -69,7 +69,7 @@ use Illuminate\Support\Facades\Route; //istilah Laravel untuk menyebut class ban
 //     return$hello;
 // }); //
 
-//==dd==//
+// //==dd==//
 // Route::get('hello', function(){
 //     $hello = ['Hello World', 2 => ['Hello Jakarta','Hello Medan']];
 //     dd($hello);
@@ -87,7 +87,7 @@ use Illuminate\Support\Facades\Route; //istilah Laravel untuk menyebut class ban
 //     return view('polinema.dosen',['dosen' => $arrDosen]);
 // });
 
-// //==CONTROLLER==//
+// // ==CONTROLLER==//
 // Route::get('/hello', [WelcomeController::class,'hello']);
 
 // Route::get('/', [PageController::class,'index']);
@@ -106,7 +106,7 @@ use Illuminate\Support\Facades\Route; //istilah Laravel untuk menyebut class ban
 //     'create','store','update','destroy'
 // ]);
 
-//==VIEW==//
+// //==VIEW==//
 // Route::get('/greeting', function(){
 //     return view('blog.hello', ['name' => 'Ereen']);
 // });
