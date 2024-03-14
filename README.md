@@ -56,6 +56,6 @@ JOBSHEET4
 
 #praktikum2.7#
 
-  ![Praktikum 2 7 - Relationships (all)](https://github.com/ereenlourenza/Pemrograman_Web_Lanjut/assets/133938963/d8bb07d9-9681-40dd-b8a7-5a0cfc53dd94)
-  
   ![Praktikum 2 7 - Relationships (dd)](https://github.com/ereenlourenza/Pemrograman_Web_Lanjut/assets/133938963/5ba09911-76ce-45e6-a8de-b6d25fada56f)
+  
+  ![Praktikum 2 7 - Relationships (all)](https://github.com/ereenlourenza/Pemrograman_Web_Lanjut/assets/133938963/d8bb07d9-9681-40dd-b8a7-5a0cfc53dd94)
