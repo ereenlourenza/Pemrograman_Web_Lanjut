@@ -1,8 +1,12 @@
 #JOBSHEET4
   ![Praktikum 1 - $fillable](https://github.com/ereenlourenza/Pemrograman_Web_Lanjut/assets/133938963/cb383d10-e51d-498f-9acd-1e6bd2624807)
+  
   ![Praktikum 2 1 - Retrieving Single Models (find)](https://github.com/ereenlourenza/Pemrograman_Web_Lanjut/assets/133938963/18bde7a0-9c4a-4c38-95df-d6730a34eb7b)
+  
   ![Praktikum 2 1 - Retrieving Single Models (findOr)](https://github.com/ereenlourenza/Pemrograman_Web_Lanjut/assets/133938963/effb8e7f-cc58-40cb-8bd8-6380c3ac72e8)
+  
   ![Praktikum 2 1 - Retrieving Single Models (first)](https://github.com/ereenlourenza/Pemrograman_Web_Lanjut/assets/133938963/a55beee6-ca31-4172-ae65-4b325eee27d0)
+  
   ![Praktikum 2 1 - Retrieving Single Models (firstOr)](https://github.com/ereenlourenza/Pemrograman_Web_Lanjut/assets/133938963/fda8ca71-8557-484f-b03e-b512e5384e86)
   ![Praktikum 2 1 - Retrieving Single Models (firstWhere)](https://github.com/ereenlourenza/Pemrograman_Web_Lanjut/assets/133938963/089090ca-5dea-4fbc-8408-4e63deb52804)
   ![Praktikum 2 2 - Not Found Exceptions (findOrFail)](https://github.com/ereenlourenza/Pemrograman_Web_Lanjut/assets/133938963/948993f3-e909-47b1-bacd-4b811056a858)
