@@ -10,9 +10,7 @@ class UserController extends Controller
 {
     public function index(){
         // Ambil model dengan kunci utamanya...
-        $user = UserModel::where('level_id','>',20)->firstOr(function(){
-            abort(404);
-        });
+        $user = UserModel::where('username','manager')->firstOrFail();
         return view('user', ['data' => $user]);
         
         // //tambah data user dengan Eloquent Model
