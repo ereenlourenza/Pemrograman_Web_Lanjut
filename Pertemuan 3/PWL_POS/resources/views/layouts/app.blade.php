@@ -12,8 +12,10 @@
 {{-- Extend and customize the page content header --}}
 
 @section('content_header')
+
     @hasSection ('content_header_title')
         <h1 class="text-muted">
+            
             @yield('content_header_title')
 
             @hasSection ('content_header_subtitle')

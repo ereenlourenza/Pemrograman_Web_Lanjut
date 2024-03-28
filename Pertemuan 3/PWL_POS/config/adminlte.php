@@ -324,6 +324,11 @@ return [
         ],
         ['header' => 'account_settings'],
         [
+            'text' => 'Manage kategori',
+            'url' => 'kategori',
+            'icon' => 'fas fa-fw fa-file',
+        ],
+        [
             'text' => 'profile',
             'url' => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
@@ -385,6 +390,11 @@ return [
         [
             'text' => 'information',
             'icon_color' => 'cyan',
+            'url' => '#',
+        ],
+        [
+            'text' => 'Manage kategori',
+            'icon_color' => 'white',
             'url' => '#',
         ],
     ],

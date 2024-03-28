@@ -11,6 +11,7 @@
         <div class="card">
             <div class="card-header">Manage Kategori</div>
             <div class="card-body">
+                <a class="btn btn-primary" href="/kategori/create">Add</a>
                 {{ $dataTable->table() }}
             </div>
         </div>

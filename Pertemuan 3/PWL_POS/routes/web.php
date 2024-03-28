@@ -33,3 +33,8 @@ Route::get('/user/hapus/{id}', [UserController::class, 'hapus']);
 Route::get('/kategori', [KategoriController::class, 'index']);
 Route::get('/kategori/create', [KategoriController::class, 'create']);
 Route::post('/kategori', [KategoriController::class, 'store']);
+
+Route::get('/kategori/edit/{id}', [KategoriController::class, 'edit']);
+Route::post('/kategori/update/{id}', [KategoriController::class, 'update']);
+
+Route::get('/kategori/delete/{id}', [KategoriController::class, 'delete']);
