@@ -5,7 +5,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('user/create') }}">Tambah</a>
+                <a class="btn btn-sm btn-primary mt-1" href="{{ url('penjualan/create') }}">Tambah Penjualan</a>
             </div>
         </div>
         <div class="card-body">
@@ -20,24 +20,26 @@
                     <div class="form-group row">
                         <label class="col-1 control-lavel col-form-label">Filter:</label>
                         <div class="col-3">
-                            <select class="form-control" id="level_id" name="level_id" required>
+                            <select class="form-control" id="user_id" name="user_id" required>
                                 <option value="">- Semua -</option>
-                                @foreach($level as $item)
-                                    <option value="{{ $item->level_id }}">{{ $item->level_nama }}</option>
+                                @foreach($user as $item)
+                                    <option value="{{ $item->user_id }}">{{ $item->username }}</option>
                                 @endforeach
                             </select>
-                            <small class="form-text text-muted">Level Pengguna</small>
+                            <small class="form-text text-muted">Username</small>
                         </div>
                     </div>
                 </div>
             </div>
-            <table class="table table-bordered table-striped table-hover table-sm" id="table_user">
+            <table class="table table-bordered table-striped table-hover table-sm" id="table_penjualan">
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Pembeli</th>
+                        <th>Penjualan Kode</th>
+                        <th>Penjualan Tanggal</th>
                         <th>Username</th>
-                        <th>Nama</th>
-                        <th>Level Pengguna</th>
+                        <th>Total Penjualan</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -52,14 +54,14 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            var dataUser = $('#table_user').DataTable({
+            var dataPenjualan = $('#table_penjualan').DataTable({
                 serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
                 ajax: {
-                    "url": "{{ url('user/list') }}",
+                    "url": "{{ url('penjualan/list') }}",
                     "dataType": "json",
-                    "type": "POST",
+                    "type": "GET",
                     "data": function (d) {
-                        d.level_id = $('#level_id').val();
+                        d.user_id = $('#user_id').val();
                     }
                 },
                 columns: [
@@ -70,22 +72,34 @@
                         searchable: false
                     },
                     {
+                        data: "pembeli", 
+                        className: "",
+                        orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
+                        searchable: true // searchable: true, jika ingin kolom ini bisa dicari
+                    },
+                    {
+                        data: "penjualan_kode", 
+                        className: "",
+                        orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
+                        searchable: true // searchable: true, jika ingin kolom ini bisa dicari
+                    },
+                    {
+                        data: "penjualan_tanggal", 
+                        className: "",
+                        orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
+                        searchable: true // searchable: true, jika ingin kolom ini bisa dicari
+                    },
+                    {
                         data: "username", 
                         className: "",
                         orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
                         searchable: true // searchable: true, jika ingin kolom ini bisa dicari
                     },
                     {
-                        data: "nama", 
+                        data: "total",
                         className: "",
-                        orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
-                        searchable: true // searchable: true, jika ingin kolom ini bisa dicari
-                    },
-                    {
-                        data: "level.level_nama", 
-                        className: "",
-                        orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
-                        searchable: true // searchable: true, jika ingin kolom ini bisa dicari
+                        orderable: true,
+                        searchable: false
                     },
                     {
                         data: "aksi", 
@@ -96,8 +110,8 @@
                 ]
             });
 
-            $('#level_id').on('change', function(){
-                dataUser.ajax.reload();
+            $('#user_id').on('change', function(){
+                dataPenjualan.ajax.reload();
             });
         });
     </script>
