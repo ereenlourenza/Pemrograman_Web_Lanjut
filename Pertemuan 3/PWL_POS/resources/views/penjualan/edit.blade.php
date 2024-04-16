@@ -17,14 +17,14 @@
                 <form method="POST" action="{{ url('/penjualan/'.$penjualan->penjualan_id) }}" class="form-horizontal">
                     @csrf {!! method_field('PUT') !!} <!-- tambahkan baris ini untuk proses edit yang butuh method PUT -->
                     <div class="form-group row">
-                        <label class="col-1 control-label col-form-label">Barang</label>
+                        <label class="col-1 control-label col-form-label">User Nama</label>
                         <div class="col-11">
                             <select class="form-control" id="user_id" name="user_id" required>
-                                <option value="">- Pilih User -</option>
+                                <option value="">- Pilih User Nama-</option>
                                     @foreach($user as $item)
                                         <option value="{{ $item->user_id }}" 
                                             @if($item->user_id == $penjualan->user_id) selected 
-                                            @endif>{{ $item->username }}
+                                            @endif>{{ $item->username }} - {{ $item->nama }}
                                         </option>
                                     @endforeach
                             </select>

@@ -34,14 +34,14 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-1 control-label col-form-label">Username</label>
+                        <label class="col-1 control-label col-form-label">User Nama</label>
                         <div class="col-11">
                             <select class="form-control" id="user_id" name="user_id" required>
-                                <option value="">- Pilih Username -</option>
+                                <option value="">- Pilih User Nama -</option>
                                     @foreach($user as $item)
                                         <option value="{{ $item->user_id }}" 
                                             @if($item->user_id == $stok->user_id) selected 
-                                            @endif>{{ $item->username }}
+                                            @endif>{{ $item->username }} - {{ $item->nama }}
                                         </option>
                                     @endforeach
                             </select>

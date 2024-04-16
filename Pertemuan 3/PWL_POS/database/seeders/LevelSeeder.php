@@ -29,6 +29,11 @@ class LevelSeeder extends Seeder
                 'level_kode' => 'STF', 
                 'level_nama' => 'Staff/Kasir'
             ],
+            [
+                'level_id' => 4, 
+                'level_kode' => 'MBR', 
+                'level_nama' => 'Member'
+            ],
         ];
         DB::table('m_level')->insert($data);
     }

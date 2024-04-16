@@ -23,10 +23,10 @@
                             <select class="form-control" id="user_id" name="user_id" required>
                                 <option value="">- Semua -</option>
                                 @foreach($user as $item)
-                                    <option value="{{ $item->user_id }}">{{ $item->username }}</option>
+                                    <option value="{{ $item->user_id }}">{{ $item->nama }}</option>
                                 @endforeach
                             </select>
-                            <small class="form-text text-muted">Username</small>
+                            <small class="form-text text-muted">User Nama</small>
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                         <th>Pembeli</th>
                         <th>Penjualan Kode</th>
                         <th>Penjualan Tanggal</th>
-                        <th>Username</th>
+                        <th>User Nama</th>
                         <th>Total Penjualan</th>
                         <th>Aksi</th>
                     </tr>
@@ -90,7 +90,7 @@
                         searchable: true // searchable: true, jika ingin kolom ini bisa dicari
                     },
                     {
-                        data: "username", 
+                        data: "nama", 
                         className: "",
                         orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
                         searchable: true // searchable: true, jika ingin kolom ini bisa dicari

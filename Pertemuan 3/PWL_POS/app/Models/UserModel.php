@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class UserModel extends Model
+class UserModel extends Authenticatable
 {
     use HasFactory;
 
@@ -18,7 +19,7 @@ class UserModel extends Model
      * 
      * @var array
      */
-    protected $fillable = ['level_id','username','nama','password'];
+    protected $fillable = ['level_id','username','nama','password', 'status', 'profile_img'];
 
     public function level(): BelongsTo{
         return $this->belongsTo(LevelModel::class, 'level_id', 'level_id');
@@ -27,4 +28,12 @@ class UserModel extends Model
     // public function stok(): HasMany{
     //     return $this->hasMany(StokModel::class, 'stok_id', 'stok_id');
     // }
+
+    protected $hidden = [
+        'password'
+    ];
+
+    protected $casts = [
+        'password' => 'hashed',
+    ];
 }

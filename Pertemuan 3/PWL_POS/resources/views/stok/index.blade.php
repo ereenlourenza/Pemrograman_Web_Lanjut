@@ -5,7 +5,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('stok/create') }}">Tambah</a>
+                <a class="btn btn-sm btn-primary mt-1" href="{{ url('stok/create') }}">Tambah Stok</a>
             </div>
         </div>
         <div class="card-body">
@@ -28,17 +28,14 @@
                             </select>
                             <small class="form-text text-muted">Barang Nama</small>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-1 control-lavel col-form-label">Filter:</label>
                         <div class="col-3">
                             <select class="form-control" id="user_id" name="user_id" required>
                                 <option value="">- Semua -</option>
                                 @foreach($user as $item)
-                                    <option value="{{ $item->user_id }}">{{ $item->username }}</option>
+                                    <option value="{{ $item->user_id }}">{{ $item->nama }}</option>
                                 @endforeach
                             </select>
-                            <small class="form-text text-muted">Username</small>
+                            <small class="form-text text-muted">User Nama</small>
                         </div>
                     </div>
                 </div>
@@ -50,7 +47,7 @@
                         <th>Stok Tanggal</th>
                         <th>Stok Jumlah</th>
                         <th>Barang Nama</th>
-                        <th>Username</th>
+                        <th>User Nama</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -102,7 +99,7 @@
                         searchable: true // searchable: true, jika ingin kolom ini bisa dicari
                     },
                     {
-                        data: "user.username", 
+                        data: "user.nama", 
                         className: "",
                         orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
                         searchable: true // searchable: true, jika ingin kolom ini bisa dicari
