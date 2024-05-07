@@ -25,7 +25,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = UserModel::where('username', $credentials['username'])->first();
             
-            if($user->status == 0)  return back()->withErrors(['status' => 'Your account has not been validated']);
+            if($user->status == 0)  return back()->withErrors(['status' => 'Akun Anda belum divalidasi.']);
 
             $request->session()->regenerate();
  
@@ -33,7 +33,7 @@ class AuthController extends Controller
         }
  
         return back()->withErrors([
-            'authentication' => 'Your Email/Password invalid',
+            'authentication' => 'Username/Password invalid',
         ])->onlyInput('username');
     }
 
@@ -79,7 +79,7 @@ class AuthController extends Controller
             userModel::create($newUser);
 
             DB::commit();
-            return redirect()->route('login.index')->with('success', 'Your registration has been saved, but you need to wait for to validation.');
+            return redirect()->route('login.index')->with('success', 'Registrasi telah disimpan, tetapi dimohon menunggu untuk validasi akun oleh Admin.');
 
         } catch (\Throwable $th) {
             DB::rollback();

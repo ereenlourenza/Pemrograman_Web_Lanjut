@@ -14,7 +14,7 @@
                 </div>
                 <a href="{{ url('user') }}" class="btn btn-sm btn-default mt-2">Kembali</a>
             @else
-                <form method="POST" action="{{ url('/user/'.$user->user_id) }}" class="form-horizontal">
+                <form method="POST" action="{{ url('/user/'.$user->user_id) }}" class="form-horizontal" enctype='multipart/form-data'>
                     @csrf {!! method_field('PUT') !!} <!-- tambahkan baris ini untuk proses edit yang butuh method PUT -->
                     <div class="form-group row">
                         <label class="col-1 control-label col-form-label">Level</label>
@@ -59,6 +59,25 @@
                                 <small class="form-text text-danger">{{ $message }}</small>
                             @else
                                 <small class="form-text text-muted">Abaikan (jangan diisi) jika tidak ingin mengganti password user.</small>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-1 control-label col-form-label">Status</label>
+                        <div class="col-11">
+                            <input type="text" class="form-control" id="status" name="status" value="{{ old('status', $user->status) }}" required>
+                            <small class="form-text text-muted">Member: 0 | Other: 1</small>
+                            @error('status')
+                                <small class="form-text text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-1 control-label col-form-label">Profile Image</label>
+                        <div class="col-11">
+                            <input type="file" class="form-control" id="profile_img" name="profile_img" value="{{ old('profile_img', $user->profile_img) }}">
+                            @error('profile_img')
+                                <small class="form-text text-danger">{{ $message }}</small>
                             @enderror
                         </div>
                     </div>

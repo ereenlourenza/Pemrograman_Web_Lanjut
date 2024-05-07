@@ -34,6 +34,15 @@
                         <th>Password</th>
                         <td>********</td>
                     </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{ $user->status == 1 ? 'Validate' : 'Unvalidate' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Foto Profil</th>
+                        <td><img src="{{ asset('storage/profile/'.$user->profile_img) }}" class=" "></td>
+                    </tr>
+                    
                 </table>
             @endempty
             

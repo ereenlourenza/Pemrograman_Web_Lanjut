@@ -7,7 +7,7 @@
             <div class="card-tools"></div>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ url('user') }}" class="form-horizontal">
+            <form method="POST" action="{{ url('user') }}" class="form-horizontal" enctype='multipart/form-data'>
                 @csrf
                 <div class="form-group row">
                     <label class="col-1 control-label col-form-label">Level</label>
@@ -54,6 +54,35 @@
                         @enderror
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label class="col-1 control-label col-form-label">Status</label>
+                    <div class="col-11">
+                        <input type="number" class="form-control" id="status" name="status" min="0" max="1" value="{{ old('status') }}" required>
+                        <small class="form-text text-muted">Member: 0 | Other: 1</small>
+
+                        @error('status')
+                            <small class="form-text text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-1 control-label col-form-label">Profile Image</label>
+                    <div class="col-11">
+                        <input type="file" class="form-control" id="profile_img" name="profile_img" value="{{ old('profile_img') }}">
+                        
+                        @error('profile_img')
+                            <small class="form-text text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+                {{-- <div class="input-group mb-3">
+                    <input type="file" class="form-control" placeholder="Gambar Profil" name="profile_img" enctype='multipart/form-data'>
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-file"></span>
+                      </div>
+                    </div>
+                  </div> --}}
                 <div class="form-group row">
                     <label class="col-1 control-label col-form-label"></label>
                     <div class="col-11">

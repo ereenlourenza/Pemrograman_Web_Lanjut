@@ -29,7 +29,7 @@ use Laravel\Ui\AuthCommand;
 
 Route::get('/login', [AuthController::class, 'index'])->name('login.index');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login.authenticate');
-Route::get('/logout', [AuthController::class, 'logout'])->name('login.logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/register', [AuthController::class, 'register'])->name('register.index');
 Route::post('/register', [AuthController::class, 'storeMember'])->name('register.storeMember');
