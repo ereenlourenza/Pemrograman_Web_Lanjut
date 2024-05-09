@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('username', 20)->unique();//unique untuk memastikan tidak ada username yang sama
             $table->string('nama', 100);
             $table->string('password');
-            $table->boolean('status');
+            $table->boolean('status')->default(0);
             $table->string('profile_img')->nullable();
             $table->timestamps();
 
