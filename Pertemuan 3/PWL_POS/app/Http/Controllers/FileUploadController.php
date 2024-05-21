@@ -49,4 +49,57 @@ class FileUploadController extends Controller
         //     echo "Tidak ada berkas yang diupload";
         // }
     }
+
+    public function fileUploadRename(){
+        return view('file-upload-rename');
+    }
+
+    public function prosesFileUploadRename(Request $request){
+        // dump($request->berkas);
+        // return "Pemrosesan file upload di sini";
+        $request->validate([
+            'nama' => 'required',
+            'berkas' => 'required|file|image|max:5000',
+        ]);
+
+        // $path = $request->berkas->store('uploads');
+        $nama = $request->nama;
+        $ext = $request->berkas->getClientOriginalExtension();
+        $extFile = $request->berkas->getClientOriginalName();
+        $namaFile = 'web-'.time().".".$extFile;
+        $path = $request->berkas->storeAs('public',$namaFile);
+        
+        // $path = $request->berkas->storeAs('public',$namaFile);
+        // $path = $request->berkas->move('gambar',$namaFile);
+        // $path = str_replace("\\","//", $path);
+        // echo "Variabel path berisi:$path <br>";
+
+        $pathBaru = asset('storage/'.$namaFile);
+        echo "Gambar berhasil di upload ke <a href = '$path'>$nama.$ext</a>";
+        echo "<br>";
+        echo "<img src='$pathBaru' width='220' height='400'>";
+
+        // $pathBaru = asset('storage/'.$namaFile);
+        // $pathBaru = asset('gambar/'.$namaFile);
+        // echo "proses upload berhasil, file berada di: $path";
+        // echo "<br>";
+        // echo "Tampilkan link:<a href='$pathBaru'>$pathBaru</a>";
+        // echo $request->berkas->getClientOriginalName()." lolos validasi";
+
+        // if($request->hasFile('berkas')){
+        //     echo "path(): ".$request->berkas->path();
+        //     echo "<br>";
+        //     echo "extension(): ".$request->berkas->extension();
+        //     echo "<br>";
+        //     echo "getClientOriginalExtension(): ".$request->berkas->getClientOriginalExtension();
+        //     echo "<br>";
+        //     echo "getMimeType(): ".$request->berkas->getMimeType();
+        //     echo "<br>";
+        //     echo "getClienOriginalName(): ".$request->berkas->getClientOriginalName();
+        //     echo "<br>";
+        //     echo "getSIze(): ".$request->berkas->getSize();
+        // }else{
+        //     echo "Tidak ada berkas yang diupload";
+        // }
+    }
 }
