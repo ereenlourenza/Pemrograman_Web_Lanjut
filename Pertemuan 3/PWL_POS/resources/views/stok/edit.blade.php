@@ -33,7 +33,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <label class="col-1 control-label col-form-label">User Nama</label>
                         <div class="col-11">
                             <select class="form-control" id="user_id" name="user_id" required>
@@ -49,7 +49,7 @@
                                 <small class="form-text text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="form-group row">
                         <label class="col-1 control-label col-form-label">Stok Tanggal</label>
                         <div class="col-11">

@@ -10,21 +10,6 @@
             <form method="POST" action="{{ url('penjualan') }}" class="form-horizontal">
                 @csrf
                 <div class="form-group row">
-                    <label class="col-1 control-label col-form-label">User Nama</label>
-                    <div class="col-11">
-                        <select class="form-control" id="user_id" name="user_id" required>
-                            <option value="">- Pilih User Nama -</option>
-                            @foreach($user as $item)
-                                <option value="{{ $item->user_id }}">{{ $item->username }} - {{ $item->nama }}</option>
-                            @endforeach
-                        </select>
-                        
-                        @error('user_id')
-                            <small class="form-text text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                </div>
-                <div class="form-group row">
                     <label class="col-1 control-label col-form-label">Barang</label>
                     <div class="col-11">
                         <select class="form-control" id="barang_id" name="barang_id[]" required>
@@ -64,7 +49,7 @@
                 <div class="form-group row">
                     <label class="col-1 control-label col-form-label">Penjualan Kode</label>
                     <div class="col-11">
-                        <input type="text" class="form-control" id="penjualan_kode" name="penjualan_kode" value="{{ old('penjualan_kode') }}" required>
+                        <input type="text" class="form-control" id="penjualan_kode" name="penjualan_kode" value="{{ old('penjualan_kode',$penjualanKode) }}" required disabled>
                         
                         @error('penjualan_kode')
                             <small class="form-text text-danger">{{ $message }}</small>

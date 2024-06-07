@@ -23,9 +23,9 @@ class BarangModel extends Model
     //     return $this->hasMany(StokModel::class, 'stok_id', 'stok_id');
     // }
 
-    protected function image(): Attribute{
-        return Attribute::make(
-            get: fn ($image) => url('/storage/posts/' . $image)
-        );
-    }
+    // protected function image(): Attribute{
+    //     return Attribute::make(
+    //         get: fn ($image) => url('/storage/barang/' . $image)
+    //     );
+    // }
 }

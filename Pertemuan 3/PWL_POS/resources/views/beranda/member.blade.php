@@ -36,7 +36,7 @@
           </tr>
           <tr>
             <th>Foto Profil</th>
-            <td><img src="{{asset('storage/profile/'.$member->profile_img)}}" class=" "></td>
+            <td><img src="{{asset('storage/profile/'.$member->profile_img)}}" class="" style="width: 20%"></td>
           </tr>
         </table>
       @endempty

@@ -99,7 +99,9 @@
                         data: "total",
                         className: "",
                         orderable: true,
-                        searchable: false
+                        searchable: false,
+                        targets: 0,
+                        render: $.fn.dataTable.render.number( '.', '.', 0, 'Rp ' )
                     },
                     {
                         data: "aksi", 

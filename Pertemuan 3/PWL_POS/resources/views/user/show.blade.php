@@ -40,7 +40,7 @@
                     </tr>
                     <tr>
                         <th>Foto Profil</th>
-                        <td><img src="{{ asset('storage/profile/'.$user->profile_img) }}" class=" "></td>
+                        <td><img src="{{ asset('storage/profile/'.$user->profile_img) }}" class="" style="width: 20%"></td>
                     </tr>
                     
                 </table>

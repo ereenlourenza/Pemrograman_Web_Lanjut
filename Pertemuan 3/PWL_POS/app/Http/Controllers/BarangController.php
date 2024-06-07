@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\BarangModel;
 use App\Models\KategoriModel;
+use App\Models\UserModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
 
 class BarangController extends Controller
 {
@@ -24,7 +27,7 @@ class BarangController extends Controller
 
         $kategori = KategoriModel::all(); //ambil data kategori untuk filter kategori
         
-        return view('barang.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kategori' => $kategori,'activeMenu' => $activeMenu]);
+        return view('barang.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kategori' => $kategori,'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
 
     }
 
@@ -66,28 +69,45 @@ class BarangController extends Controller
 
         $activeMenu = 'barang'; //set menu yang sedang aktif
 
-        return view('barang.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kategori' => $kategori, 'activeMenu' => $activeMenu]);
+        return view('barang.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kategori' => $kategori, 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
     }
 
     //Menyimpan data barang baru
     public function store(Request $request){
-        $request->validate([
+        $newBarang = $request->validate([
             //barang_kode harus diisi, berupa string, minimal 4 karakter, dan bernilai unik di tabel m_barang kolom barang_kode
-            'barang_kode'   => 'required|string|min:3|max:10|unique:m_barang,barang_kode',  
+            // 'barang_kode'   => 'required|string|min:3|max:40|unique:m_barang,barang_kode',  
             'barang_nama'   => 'required|string|max:50',        //barang_nama harus diisi, berupa string, dan maksimal 50 karakter                     
-            'harga_beli'    => 'required|integer',              //harga_beli harus diisi dan berupa angka
-            'harga_jual'    => 'required|integer',              //harga_jual harus diisi dan berupa angka     
-            'kategori_id'   => 'required|integer'               //kategori_id harus diisi dan berupa angka
+            'harga_beli'    => 'required|integer|',//,lt:harga_jual',              //harga_beli harus diisi dan berupa angka
+            'harga_jual'    => 'required|integer|gt:harga_beli',              //harga_jual harus diisi dan berupa angka     
+            'kategori_id'   => 'required|integer',               //kategori_id harus diisi dan berupa angka
+            'image'         => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        //Store kode barang
+        $kategori = KategoriModel::find($request->kategori_id);
+        $dateNow = Carbon::now()->format('dmY');
+        $barangKategori = (BarangModel::orderBy('barang_id', 'desc')->first())->barang_id + 1;
+        $barangKode = $kategori->kategori_kode . $request->barang_kode . ($barangKategori < 10 ? ('0' . $barangKategori) : $barangKategori) . $dateNow;
+
+        // Store image
+        $barangImg = $newBarang['image'];
+        $barangName = $request->image->hashName();
+        $barangImg->storeAs('public/barang', $barangName);
 
 
         BarangModel::create([
-            'barang_kode'   => $request->barang_kode,
+            'barang_kode'   => $barangKode,
             'barang_nama'   => $request->barang_nama,
             'harga_beli'    => $request->harga_beli,
             'harga_jual'    => $request->harga_jual,
-            'kategori_id'   => $request->kategori_id
+            'kategori_id'   => $request->kategori_id,
+            'image'         => $barangName,
         ]);
+
+        // Overide image
+        $newBarang['image'] = $barangName;
+
 
         return redirect('/barang')->with('success', 'Data barang berhasil disimpan');
     }
@@ -107,7 +127,7 @@ class BarangController extends Controller
 
         $activeMenu = 'barang'; //set menu yang sedang aktif
 
-        return view('barang.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'barang' => $barang, 'activeMenu' => $activeMenu]);
+        return view('barang.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'barang' => $barang, 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
     }
 
     //Menampilkan halaman form edit barang
@@ -127,28 +147,38 @@ class BarangController extends Controller
 
         $activeMenu = 'barang'; //set menu yang sedang aktif
 
-        return view('barang.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'barang' => $barang,'kategori' => $kategori, 'activeMenu' => $activeMenu]);
+        return view('barang.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'barang' => $barang,'kategori' => $kategori, 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
     }
 
     //Menyimpan perubahan data barang
     public function update(Request $request, string $id){
-        $request->validate([
+        $newBarang = $request->validate([
             //barang_kode harus diisi, berupa string, minimal 3 karakter, maksimal 10 karakter
             //dan bernilai unik di tabel m_barang kolom barang_kode kecuali untuk barang dengan id yang sedang diedit
-            'barang_kode'   => 'required|string|min:3|max:10|unique:m_barang,barang_kode,'.$id.',barang_id',
+            // 'barang_kode'   => 'required|string|min:3|max:40|unique:m_barang,barang_kode,'.$id.',barang_id',
             'barang_nama'   => 'required|string|max:50',        //barang_nama harus diisi, berupa string, dan maksimal 50 karakter
             'harga_beli'    => 'required|integer',              //harga_beli harus diisi dan berupa angka
             'harga_jual'    => 'required|integer',              //harga_jual harus diisi dan berupa angka
-            'kategori_id'   => 'required|integer'               //kategori_id harus diisi dan berupa angka
+            'kategori_id'   => 'required|integer',               //kategori_id harus diisi dan berupa angka
+            'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        // Store image
+        $barangImg = $newBarang['image'];
+        $barangName = $request->image->hashName();
+        $barangImg->storeAs('public/barang', $barangName);
         
         BarangModel::find($id)->update([
-            'barang_kode'   => $request->barang_kode,
+            // 'barang_kode'   => $request->barang_kode,
             'barang_nama'   => $request->barang_nama,
             'harga_beli'    => $request->harga_beli,
             'harga_jual'    => $request->harga_jual,
-            'kategori_id'   => $request->kategori_id
+            'kategori_id'   => $request->kategori_id,
+            'image'         => $request->image->hashName(),
         ]);
+
+        // Overide image
+        $newBarang['image'] = $barangName;
 
         return redirect('/barang')->with('success', 'Data barang berhasil diubah');
     }

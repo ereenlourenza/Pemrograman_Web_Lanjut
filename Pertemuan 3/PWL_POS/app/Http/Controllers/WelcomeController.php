@@ -10,18 +10,43 @@ use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 use App\Charts\MembersCharts;
 use App\Exports\MembersExport;
+use App\Models\BarangModel;
+use App\Models\PenjualanModel;
+use App\Models\StokModel;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class WelcomeController extends Controller
 {
     public function index(MembersCharts $chart){
         $breadcrumb = (object)[
-            'title' => 'Selamat Datang',
+            'title' => 'Dashboard',
             'list' => ['Home', 'Dashboard']
         ];
 
         $activeMenu = 'dashboard';
         // return view('welcome', ['breadcrumb' => $breadcrumb, 'activeMenu' => $activeMenu]);
-        return view('beranda.index', ['breadcrumb' => $breadcrumb, 'activeMenu' => $activeMenu, 'chart' => $chart->build()]);
+
+        // $time = date('M');
+
+        $countPenjualan = PenjualanModel::count();
+        $countStok = StokModel::count();
+        $countUser = UserModel::count();
+        $totalPenjualan = DB::table('t_penjualan_detail')
+            ->sum(DB::raw('harga * jumlah'));
+
+        // return View::make('index')->with('count', $count);
+        return view('beranda.index', [
+            'breadcrumb' => $breadcrumb, 
+            'activeMenu' => $activeMenu, 
+            'countPenjualan' => $countPenjualan, 
+            'countStok' => $countStok,
+            'countUser' => $countUser,
+            'totalPenjualan' => $totalPenjualan,
+            'chart' => $chart->build(),
+            'notifUser' => UserModel::all()
+            // 'time' => $time
+        ]);
     }
 
     public function list(Request $request)
@@ -86,7 +111,8 @@ class WelcomeController extends Controller
             'breadcrumb' => $breadcrumb, 
             'page' => $page,
             'member' => $member,
-            'activeMenu' => $activeMenu
+            'activeMenu' => $activeMenu,
+            'notifUser' => UserModel::all()
         ]);
     }
 

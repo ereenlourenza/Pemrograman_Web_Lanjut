@@ -27,7 +27,7 @@ class UserController extends Controller
 
         $level = LevelModel::all(); //ambil data level untuk filter level
         
-        return view('user.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level,'activeMenu' => $activeMenu]);
+        return view('user.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level,'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
 
     }
 
@@ -68,7 +68,7 @@ class UserController extends Controller
         $level = LevelModel::all(); //ambil data level untuk ditampilkan di form
         $activeMenu = 'user'; //set menu yang sedang aktif
 
-        return view('user.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
+        return view('user.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
     }
 
     //Menyimpan data user baru
@@ -111,7 +111,7 @@ class UserController extends Controller
 
         $activeMenu = 'user'; //set menu yang sedang aktif
 
-        return view('user.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'user' => $user, 'activeMenu' => $activeMenu]);
+        return view('user.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'user' => $user, 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
     }
 
     //Menampilkan halaman form edit user
@@ -130,7 +130,7 @@ class UserController extends Controller
 
         $activeMenu = 'user'; //set menu yang sedang aktif
 
-        return view('user.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'user' => $user,'level' => $level, 'activeMenu' => $activeMenu]);
+        return view('user.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'user' => $user,'level' => $level, 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
     }
 
     //Menyimpan perubahan data user

@@ -38,7 +38,9 @@
                         <th>Barang Dibeli</th>
                         <td>
                             <ul>
+                                @php ($total = 0)
                                 @foreach ($penjualan_detail as $item)
+                                    @php ($total+=$item->harga * $item->jumlah)
                                     <li> {{ $item->barang->barang_nama }} ({{ $item->jumlah }} pcs) = {{ $item->harga * $item->jumlah }}</li>
                                 @endforeach
                             </ul>
@@ -47,10 +49,7 @@
                     <tr>
                         <th>Total</th>
                         <td>
-                            <?php $total = 0?>
-                            @foreach ($penjualan_detail as $item)
-                                {{ $total += $item->harga*$item->jumlah }}
-                            @endforeach
+                            {{ $total }}
                         </td>
                     </tr>
                 </table>

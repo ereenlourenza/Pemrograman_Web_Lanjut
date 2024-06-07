@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LevelModel;
+use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -24,7 +25,7 @@ class LevelController extends Controller
 
         $level = LevelModel::all(); //ambil data level untuk filter level
         
-        return view('level.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
+        return view('level.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
     }
 
     //Ambil data level dalam bentuk json untuk datatables
@@ -65,7 +66,7 @@ class LevelController extends Controller
         
         $activeMenu = 'level'; //set menu yang sedang aktif
 
-        return view('level.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
+        return view('level.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
     }
 
     //Menyimpan data level baru
@@ -99,7 +100,7 @@ class LevelController extends Controller
 
         $activeMenu = 'level'; //set menu yang sedang aktif
 
-        return view('level.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
+        return view('level.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
     }
 
     //Menampilkan halaman form edit level
@@ -117,7 +118,7 @@ class LevelController extends Controller
 
         $activeMenu = 'level'; //set menu yang sedang aktif
 
-        return view('level.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level,'level', 'activeMenu' => $activeMenu]);
+        return view('level.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level,'level', 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
     }
 
     //Menyimpan perubahan data level

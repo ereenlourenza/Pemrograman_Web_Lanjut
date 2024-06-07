@@ -28,7 +28,7 @@ class PenjualanController extends Controller
 
         $user = UserModel::all(); //ambil data user untuk filter user
         
-        return view('penjualan.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'user' => $user,'activeMenu' => $activeMenu]);
+        return view('penjualan.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'user' => $user,'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
 
     }
 
@@ -60,12 +60,12 @@ class PenjualanController extends Controller
         $penjualans = (object) DB::table('t_penjualan as p')
             ->join('t_penjualan_detail as pd', 'p.penjualan_id', '=', 'pd.penjualan_id')
             ->join('m_user as u', 'p.user_id', '=', 'u.user_id')
-            ->selectRaw('p.penjualan_id, p.pembeli, p.penjualan_kode, p.penjualan_tanggal , u.nama, sum(pd.harga * pd.jumlah) as total')
+            ->selectRaw("p.penjualan_id, p.pembeli, p.penjualan_kode, DATE_FORMAT(p.penjualan_tanggal, '%d-%m-%Y') as penjualan_tanggal , u.nama, sum(pd.harga * pd.jumlah) as total")
             ->groupBy('u.nama')
             ->groupBy('p.penjualan_id')
             ->groupBy('p.pembeli')
             ->groupBy('p.penjualan_kode')
-            ->groupBy('p.penjualan_tanggal')
+            ->groupBy('penjualan_tanggal')
             ->get();
 
 // dd($penjualans);
@@ -79,7 +79,7 @@ class PenjualanController extends Controller
             ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
             ->addColumn('aksi', function ($penjualan) { // menambahkan kolom aksi
                 $btn = '<a href="'.url('/penjualan/' . $penjualan->penjualan_id).'" class="btn btn-info btn-sm">Detail</a> ';
-                $btn .= '<a href="'.url('/penjualan/' . $penjualan->penjualan_id . '/edit').'" class="btn btn-warning btn-sm">Edit</a> ';
+                // $btn .= '<a href="'.url('/penjualan/' . $penjualan->penjualan_id . '/edit').'" class="btn btn-warning btn-sm">Edit</a> ';
                 $btn .= '<form class="d-inline-block" method="POST" action="'. url('/penjualan/'.$penjualan->penjualan_id).'">'. csrf_field() . method_field('DELETE') . 
                 '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>'; 
                 
@@ -103,9 +103,11 @@ class PenjualanController extends Controller
         $user = UserModel::all(); //ambil data user untuk ditampilkan di form
         $barang = StokModel::where('stok_jumlah', '>', 0)->with('barang')->get();
 
+        $penjualanKode = 'P'.PenjualanModel::orderBy('penjualan_id', 'desc')->first()->penjualan_id+1;
+
         $activeMenu = 'penjualan'; //set menu yang sedang aktif
 
-        return view('penjualan.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'user' => $user, 'barang' => $barang, 'activeMenu' => $activeMenu]);
+        return view('penjualan.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'user' => $user, 'barang' => $barang, 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all(), 'penjualanKode' => $penjualanKode]);
     }
 
     //Menyimpan data penjualan baru
@@ -113,17 +115,27 @@ class PenjualanController extends Controller
         $request->validate([
             //penjualan_kode harus diisi, berupa string, minimal 4 karakter, dan bernilai unik di tabel t_penjualan kolom penjualan_kode
             'pembeli'           => 'required|string|max:50',
-            'penjualan_kode'    => 'required|required:P|string|min:3|unique:t_penjualan,penjualan_kode',                    
+            // 'penjualan_kode'    => 'required|string|min:3|unique:t_penjualan,penjualan_kode',                    
             'penjualan_tanggal' => 'required|date',              //harga_beli harus diisi dan berupa angka
-            'user_id'           => 'required|integer',               //user_id harus diisi dan berupa angka
+            // 'user_id'           => 'required|integer',               //user_id harus diisi dan berupa angka
             'barang_id'         => 'required|array'
         ]);
-
+        
         $barang = BarangModel::all();
 
         DB::beginTransaction();
 
-        $penjualan = PenjualanModel::create($request->all());
+        // $penjualan = PenjualanModel::create($request->all());
+
+        // user sesuai login
+        $dataPenjualan = $request->all();
+        $dataPenjualan['user_id'] = auth()->user()->user_id;
+
+        // format kode penjualan
+        $dataPenjualan['penjualan_kode'] = 'P'.PenjualanModel::orderBy('penjualan_id', 'desc')->first()->penjualan_id+1;
+        $penjualan = PenjualanModel::create($dataPenjualan);
+
+
         $barangLaku = $request->only('barang_id');
 
         foreach($barangLaku as $key => $item){
@@ -135,7 +147,7 @@ class PenjualanController extends Controller
             ]);
 
             $stok = StokModel::where('barang_id', $item[0])->with('barang')->first();
-            $stok -> decrement('stok_jumlah', 1);
+            $stok -> decrement('stok_jumlah', $request->jumlah);
 
             if($stok->stok_jumlah < 0){
                 return back()->with('error', 'Stok' .$stok->barang_nama. ' Tidak Mencukupi');
@@ -143,6 +155,12 @@ class PenjualanController extends Controller
         }
 
         DB::commit();
+
+        //Store kode penjualan
+        // $kategori = KategoriModel::find($request->kategori_id);
+        // $dateNow = Carbon::now()->format('dmY');
+        // $barangKategori = (BarangModel::where('kategori_id', $request->kategori_id)->count()) + 1;
+        // $barangKode = $kategori->kategori_kode . $request->barang_kode . ($barangKategori < 10 ? ('0' . $barangKategori) : $barangKategori) . $dateNow;      
 
         // PenjualanModel::create([
         //     'pembeli'           => $request->pembeli,
@@ -170,7 +188,7 @@ class PenjualanController extends Controller
 
         $activeMenu = 'penjualan'; //set menu yang sedang aktif
 
-        return view('penjualan.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'penjualan' => $penjualan, 'penjualan_detail' => $penjualan_detail, 'activeMenu' => $activeMenu]);
+        return view('penjualan.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'penjualan' => $penjualan, 'penjualan_detail' => $penjualan_detail, 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
     }
 
     //Menampilkan halaman form edit penjualan
@@ -192,7 +210,7 @@ class PenjualanController extends Controller
 
         $activeMenu = 'penjualan'; //set menu yang sedang aktif
 
-        return view('penjualan.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'penjualan' => $penjualan, 'penjualan_detail' => $penjualan_detail, 'barang' => $barang, 'user' => $user, 'activeMenu' => $activeMenu]);
+        return view('penjualan.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'penjualan' => $penjualan, 'penjualan_detail' => $penjualan_detail, 'barang' => $barang, 'user' => $user, 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
     }
 
     //Menyimpan perubahan data penjualan

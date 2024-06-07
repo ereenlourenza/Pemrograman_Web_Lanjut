@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Log in</title>
+  <title>Toko Sinar Indo | Log in</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -17,7 +17,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="{{ route('login.authenticate') }}"><b>PWL</b></a>
+    <a href="{{ route('login.authenticate') }}"><b>Toko Sinar Indo</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
@@ -61,14 +61,14 @@
         </div>
         <div class="row">
           <!-- /.col -->
-          <div class="col-4">
+          <div class="col-4 mx-auto">
             <button type="submit" class="btn btn-primary btn-block">Sign In</button>
           </div>
           <!-- /.col -->
         </div>
       </form>
 
-      <p class="mb-0">
+      <p class="mb-0 mt-3">
         <a href="{{ route('register.index') }}" class="text-center">Register a new membership</a>
       </p>
     </div>

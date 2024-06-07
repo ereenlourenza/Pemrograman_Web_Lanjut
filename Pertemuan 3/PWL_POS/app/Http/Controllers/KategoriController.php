@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\KategoriDataTable;
 use App\Models\KategoriModel;
+use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -25,7 +26,7 @@ class KategoriController extends Controller
 
         $kategori = KategoriModel::all(); //ambil data kategori untuk filter kategori
         
-        return view('kategori.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kategori' => $kategori, 'activeMenu' => $activeMenu]);
+        return view('kategori.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kategori' => $kategori, 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
     }
 
     //Ambil data kategori dalam bentuk json untuk datatables
@@ -66,7 +67,7 @@ class KategoriController extends Controller
         
         $activeMenu = 'kategori'; //set menu yang sedang aktif
 
-        return view('kategori.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kategori' => $kategori, 'activeMenu' => $activeMenu]);
+        return view('kategori.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kategori' => $kategori, 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
     }
 
     //Menyimpan data kategori baru
@@ -100,7 +101,7 @@ class KategoriController extends Controller
 
         $activeMenu = 'kategori'; //set menu yang sedang aktif
 
-        return view('kategori.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kategori' => $kategori, 'activeMenu' => $activeMenu]);
+        return view('kategori.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kategori' => $kategori, 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
     }
 
     //Menampilkan halaman form edit kategori
@@ -118,7 +119,7 @@ class KategoriController extends Controller
 
         $activeMenu = 'kategori'; //set menu yang sedang aktif
 
-        return view('kategori.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kategori' => $kategori,'kategori', 'activeMenu' => $activeMenu]);
+        return view('kategori.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kategori' => $kategori,'kategori', 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
     }
 
     //Menyimpan perubahan data kategori

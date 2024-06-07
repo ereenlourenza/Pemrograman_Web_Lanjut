@@ -14,7 +14,72 @@
         @if (session('error'))
             <div class="alert alert-danger">{{session('error')}}</div>
         @endif
-        @if (auth()->user()->level->level_nama != 'Member')
+        @if (auth()->user()->level->level_nama == 'Administrator' || auth()->user()->level->level_nama == 'Manager')
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>{{ $countPenjualan }}</h3>
+    
+                        <p>Transaksi Penjualan</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <a href="{{ route('penjualan.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                    <h3>{{ $countStok }}
+                        {{-- <sup style="font-size: 20px">%</sup> --}}
+                    </h3>
+    
+                    <p>Stok Barang</p>
+                    </div>
+                    <div class="icon">
+                    <i class="fas fa-boxes"></i>
+                    </div>
+                    <a href="{{ route('stok.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                    <h3>{{ $countUser }}</h3>
+    
+                    <p>Total User</p>
+                    </div>
+                    <div class="icon">
+                    <i class="fas fa-users"></i>
+                    </div>
+                    <a href="{{ route('user.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                    <h3>@currency (($totalPenjualan)) </h3>
+    
+                    <p>Pendapatan</p>
+                    </div>
+                    <div class="icon">
+                    <i class="fas fa-money-bill-alt"></i>
+                    </div>
+                    <a href="{{ route('barang.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+        <div class="row">
             <div class="chart-wrapper container-fluid">
                 {!! $chart->container() !!}
             </div>
@@ -41,6 +106,7 @@
                     </thead>
                 </table>
             </div>
+        </div>
         @else
             <table class="table table-bordered table-striped table-hover table-sm">
                 <tr>
@@ -65,7 +131,7 @@
                 </tr>
                 <tr>
                     <th>Foto Profil</th>
-                    <td><img src="{{ asset('storage/profile/'.auth()->user()->profile_img) }}" class=" "></td>
+                    <td><img src="{{ asset('storage/profile/'.auth()->user()->profile_img) }}" class=" " style="width: 50%"></td>
                 </tr>
             </table>
         @endif

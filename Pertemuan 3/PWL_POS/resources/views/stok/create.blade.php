@@ -24,13 +24,13 @@
                         @enderror
                     </div>
                 </div>
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     <label class="col-1 control-label col-form-label">User Nama</label>
                     <div class="col-11">
                         <select class="form-control" id="user_id" name="user_id" required>
                             <option value="">- Pilih User Nama -</option>
                             @foreach($user as $item)
-                                <option value="{{ $item->user_id }}">{{ $item->username }} - {{ $item->nama }}</option>
+                                <option value="{{ $item->user_id }}">{{ $item->nama }}</option>
                             @endforeach
                         </select>
                         
@@ -38,7 +38,7 @@
                             <small class="form-text text-danger">{{ $message }}</small>
                         @enderror
                     </div>
-                </div>
+                </div> --}}
                 <div class="form-group row">
                     <label class="col-1 control-label col-form-label">Stok Tanggal</label>
                     <div class="col-11">

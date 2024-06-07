@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ config('app.name', 'PWL Laravel Starter Code ')}}</title>
+  {{-- <title>{{ config('app.name', 'PWL Laravel Starter Code ')}}</title> --}}
+  <title>Toko Sinar Indo</title>
 
   <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- Untuk mengirimkan token Laravel CRSF pada setiap request ajax-->
 
@@ -20,42 +21,43 @@
 
   @stack('css') <!-- Digunakan untuk memanggil custom css dari perintah push('css' pada masing-masing view -->
 </head>
+
 <body class="hold-transition sidebar-mini">
-<!-- Site wrapper -->
-<div class="wrapper">
-  <!-- Navbar -->
-  @include('layouts.header')
-  <!-- /.navbar -->
+  <!-- Site wrapper -->
+  <div class="wrapper">
+    <!-- Navbar -->
+    @include('layouts.header')
+    <!-- /.navbar -->
 
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="{{ url('/') }}" class="brand-link">
-      <img src=" {{ asset('adminlte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">PWL - Starter Code</span>
-    </a>
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="{{ url('/') }}" class="brand-link">
+        <img src=" {{ asset('logo/BearLogo.jpg') }} " alt="Bear Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">Toko Sinar Global</span>
+      </a>
 
-    <!-- Sidebar -->
-    @include('layouts.sidebar')
-    <!-- /.sidebar -->
-  </aside>
+      <!-- Sidebar -->
+      @include('layouts.sidebar')
+      <!-- /.sidebar -->
+    </aside>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    @include('layouts.breadcrumb')
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      @include('layouts.breadcrumb')
 
-    <!-- Main content -->
-    <section class="content">
-      @yield('content')
-    </section>
-    <!-- /.content -->
+      <!-- Main content -->
+      <section class="content">
+        @yield('content')
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    @include('layouts.footer')
   </div>
-  <!-- /.content-wrapper -->
-
-  @include('layouts.footer')
-</div>
-<!-- ./wrapper -->
+  <!-- ./wrapper -->
 
 <!-- jQuery -->
 <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>

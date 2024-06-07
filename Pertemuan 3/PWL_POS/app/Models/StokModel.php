@@ -20,4 +20,8 @@ class StokModel extends Model
     public function user(): BelongsTo{
         return $this->belongsTo(UserModel::class, 'user_id', 'user_id');
     }
+
+    protected $casts = [
+        'stok_tanggal'  => 'date:d-m-Y',
+    ];
 }

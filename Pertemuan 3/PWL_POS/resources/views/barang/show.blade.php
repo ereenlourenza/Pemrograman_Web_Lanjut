@@ -38,6 +38,11 @@
                         <th>Harga Jual</th>
                         <td>{{ $barang->harga_jual }}</td>
                     </tr>
+                    <tr>
+                        <th>Barang Image</th>
+                        <td><img src="{{ asset('storage/barang/'.$barang->image) }}" class=" " style="width: 20%"></td>
+                        {{-- <td><img src="{{$barang->image}}" class=" "></td> Kalau menggunakan prefix yang ada di BarangModel--}}
+                    </tr>
                 </table>
             @endempty
             

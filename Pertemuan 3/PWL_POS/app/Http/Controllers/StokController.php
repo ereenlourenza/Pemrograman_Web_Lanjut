@@ -26,7 +26,7 @@ class StokController extends Controller
         $barang = BarangModel::all(); //ambil data barang untuk filter barang
         $user = UserModel::all(); //ambil data user untuk filter user
         
-        return view('stok.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'barang' => $barang, 'user' => $user, 'activeMenu' => $activeMenu]);
+        return view('stok.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'barang' => $barang, 'user' => $user, 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
 
     }
 
@@ -73,7 +73,7 @@ class StokController extends Controller
 
         $activeMenu = 'stok'; //set menu yang sedang aktif
 
-        return view('stok.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'barang' => $barang, 'user' => $user, 'activeMenu' => $activeMenu]);
+        return view('stok.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'barang' => $barang, 'user' => $user, 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
     }
 
     //Menyimpan data stok baru
@@ -82,14 +82,18 @@ class StokController extends Controller
             'stok_tanggal'  => 'required|date',
             'stok_jumlah'   => 'required|integer',
             'barang_id'     => 'required|integer',
-            'user_id'       => 'required|integer',
+            // 'user_id'       => 'required|integer',
         ]);
+
+        // $dataStok = $request->all();
+        // $dataStok['user_id'] = auth()->user()->user_id;
+        // $stok = StokModel::create($dataStok);
 
         StokModel::create([
             'stok_tanggal'  => $request->stok_tanggal,
             'stok_jumlah'   => $request->stok_jumlah,
             'barang_id'     => $request->barang_id,
-            'user_id'       => $request->user_id
+            'user_id'       => auth()->user()->user_id,
         ]);
 
         return redirect('/stok')->with('success', 'Data stok berhasil disimpan');
@@ -110,7 +114,7 @@ class StokController extends Controller
 
         $activeMenu = 'stok'; //set menu yang sedang aktif
 
-        return view('stok.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'stok' => $stok, 'activeMenu' => $activeMenu]);
+        return view('stok.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'stok' => $stok, 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
     }
 
     //Menampilkan halaman form edit stok
@@ -131,7 +135,7 @@ class StokController extends Controller
 
         $activeMenu = 'stok'; //set menu yang sedang aktif
 
-        return view('stok.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'stok' => $stok, 'barang' => $barang, 'user' => $user, 'activeMenu' => $activeMenu]);
+        return view('stok.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'stok' => $stok, 'barang' => $barang, 'user' => $user, 'activeMenu' => $activeMenu, 'notifUser' => UserModel::all()]);
     }
 
     //Menyimpan perubahan data stok
@@ -140,14 +144,14 @@ class StokController extends Controller
             'stok_tanggal'  => 'required|date',
             'stok_jumlah'   => 'required|integer',
             'barang_id'     => 'required|integer',
-            'user_id'       => 'required|integer',
+            // 'user_id'       => 'required|integer',
         ]);
         
         StokModel::find($id)->update([
             'stok_tanggal'  => $request->stok_tanggal,
             'stok_jumlah'   => $request->stok_jumlah,
             'barang_id'     => $request->barang_id,
-            'user_id'       => $request->user_id
+            'user_id'       => auth()->user()->user_id,
         ]);
 
         return redirect('/stok')->with('success', 'Data stok berhasil diubah');

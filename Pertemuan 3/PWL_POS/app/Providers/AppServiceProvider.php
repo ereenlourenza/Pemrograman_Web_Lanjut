@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Yajra\DataTables\Html\Builder;
 
@@ -21,5 +22,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Builder::useVite();
+
+        Blade::directive('currency', function($expression){
+            return "Rp <?php echo number_format($expression,0,',','.'); ?>";
+        });
     }
 }
